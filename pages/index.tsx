@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
+import QuoteModal from "@/components/QuoteGenerator/QuoteModal";
 
 //components
 import {
@@ -20,11 +21,59 @@ import {
 } from "@/components/QuoteGenerator/QuoteGeneratorElements";
 
 //assets
-import Cloud1 from "../assets/cloud-and-thunder.png";
-import Cloud2 from "../assets/cloudy-weather.png";
+import Scene from "../assets/scene.png";
+import Cat from "../assets/cat.png";
 
 export default function Home() {
   const [numberOfQuotes, setNumberOfQuotes] = useState<Number | null>(0);
+  const [generatedImageURL, setGeneratedImageURL] = useState<string | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false); // New state for modal
+
+  const generateQuote = async () => {
+    try {
+      const response = await fetch("/api/generateQuote", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const blobData = await response.blob();
+      const imageURL = URL.createObjectURL(blobData);
+
+      // Display the generated image on the screen
+      setGeneratedImageURL(imageURL);
+
+      // Increment the count of generated quotes
+      setNumberOfQuotes((prevCount) => (prevCount as number) + 1);
+
+      // Open the modal
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error generating quote:", error);
+    }
+  };
+
+  const handleDownload = () => {
+    if (generatedImageURL) {
+      // Create a temporary download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = generatedImageURL;
+      downloadLink.download = "generated_quote_image.jpg";
+
+      // Simulate a click on the link to trigger the download
+      downloadLink.click();
+    } else {
+      console.error("No generated image to download");
+    }
+  };
+
+  const handleCloseModal = () => {
+    // Close the modal
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -34,7 +83,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      {isModalOpen && generatedImageURL && (
+        <QuoteModal
+          imageURL={generatedImageURL}
+          onClose={handleCloseModal}
+          onDownload={handleDownload}
+          onRegenerate={generateQuote}
+        />
+      )}
       {/* BackGround */}
       <GradientBackgroundCon>
         {/* Quote Generator MOdal */}
@@ -42,7 +98,7 @@ export default function Home() {
 
         {/* Quote Generator */}
         <FloatingButton
-          href="https://www.linkedin.com/in/ashwin-maurya/"
+          href="https://zenquotes.io/"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -50,15 +106,12 @@ export default function Home() {
         </FloatingButton>
         <QuoteGeneratorCon>
           <QuoteGeneratorInnerCon>
-            <QuoteGeneratorTitle>
-              Daily Inspiration Generator
-            </QuoteGeneratorTitle>
+            <QuoteGeneratorTitle>Quote Generator</QuoteGeneratorTitle>
             <QuoteGeneratorSubTitle>
-              Looking for an inspiration? Generate a Quote here and get started
-              now!!
+              Generate Quotes for free!!
             </QuoteGeneratorSubTitle>
             <GenerateQuoteButton>
-              <GenerateQuoteButtonText onClick={null}>
+              <GenerateQuoteButtonText onClick={generateQuote}>
                 Make a Quote
               </GenerateQuoteButtonText>
             </GenerateQuoteButton>
@@ -66,21 +119,21 @@ export default function Home() {
         </QuoteGeneratorCon>
 
         {/* Background Images */}
-        <BackgroundImage1 src={Cloud1} height="300" alt="Cloud Image" />
-        <BackgroundImage2 src={Cloud2} height="300" alt="Cloud Image" />
+        <BackgroundImage1 src={Cat} height="400" alt="Cloud Image" />
+        <BackgroundImage2 src={Scene} height="400" alt="Cloud Image" />
 
         {/* Footer */}
         <FootCon>
           <>
             Quotes Genreated: {numberOfQuotes}
             <br />
-            Developed with ❤️ by{" "}
+            Developed by{" "}
             <FooterLink
               href="https://www.linkedin.com/in/ashwin-maurya/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @ashwin
+              @ashwin-maurya
             </FooterLink>
           </>
         </FootCon>

@@ -13,18 +13,20 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.17",
     "next": "14.0.2",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.32.6",
     "styled-components": "^6.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.9.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/styled-components": "^5.1.30",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   }
 }

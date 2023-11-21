@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const GradientBackgroundCon = styled.div`
-  background: linear-gradient(to right, #270091, #f3ae00);
+  background: linear-gradient(to right, #07003a, #010102);
   background-size: 400% 400%;
   animation: gradient 6s ease infinite;
   height: 100vh;
@@ -60,6 +60,7 @@ export const FooterLink = styled(Link)`
 `;
 export const FloatingButton = styled(Link)`
   color: white;
+  text-decoration: none;
   transition: 0.4s;
   padding: 10px 20px;
   position: absolute;
@@ -71,9 +72,10 @@ export const FloatingButton = styled(Link)`
   -webkit-backdrop-filter: blur(10px);
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  z-index: 9999999;
+  z-index: 999;
   &:hover {
     color: #ffffffd7;
+    text-decoration: underline;
   }
 `;
 
@@ -95,6 +97,9 @@ export const QuoteGeneratorCon = styled.div`
   -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+  @media only screen and (max-width: 800px) {
+    width: 95vw;
+  }
 `;
 
 export const QuoteGeneratorInnerCon = styled.div`
@@ -146,13 +151,13 @@ export const GenerateQuoteButton = styled.div`
   justify-content: center;
   align-items: center;
   transform-origin: center;
-  background: rgba(0, 0, 70, 0.3);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   &:hover {
-    filter: brightness(2);
+    filter: brightness(10);
   }
 `;
 
