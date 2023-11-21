@@ -1,6 +1,7 @@
 import sharp from "sharp";
 import fetch from "node-fetch";
 import path from "path";
+import { Headers } from "node-fetch";
 
 const apiURL = "https://zenquotes.io/api/random";
 

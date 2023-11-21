@@ -29,10 +29,12 @@ export default function Home() {
   const [generatedImageURL, setGeneratedImageURL] = useState<string | null>(
     null
   );
-  const [isModalOpen, setIsModalOpen] = useState(false); // New state for modal
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const generateQuote = async () => {
     try {
+      setIsLoading(true); // Set loading state to true when starting the generation
+
       const response = await fetch("/api/generateQuote", {
         method: "GET",
         headers: {
@@ -53,6 +55,8 @@ export default function Home() {
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error generating quote:", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false when generation is complete
     }
   };
 
@@ -110,11 +114,15 @@ export default function Home() {
             <QuoteGeneratorSubTitle>
               Generate Quotes for free!!
             </QuoteGeneratorSubTitle>
-            <GenerateQuoteButton>
-              <GenerateQuoteButtonText onClick={generateQuote}>
-                Make a Quote
-              </GenerateQuoteButtonText>
-            </GenerateQuoteButton>
+            {isLoading ? ( // Display "Generating..." when loading
+              <GenerateQuoteButton>
+                <GenerateQuoteButtonText>Generating...</GenerateQuoteButtonText>
+              </GenerateQuoteButton>
+            ) : (
+              <GenerateQuoteButton onClick={generateQuote}>
+                <GenerateQuoteButtonText>Make a Quote</GenerateQuoteButtonText>
+              </GenerateQuoteButton>
+            )}
           </QuoteGeneratorInnerCon>
         </QuoteGeneratorCon>
 

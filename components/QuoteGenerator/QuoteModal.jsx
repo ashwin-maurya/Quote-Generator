@@ -105,6 +105,7 @@ const RegenerateButton = styled.button`
   cursor: pointer;
   border-radius: 5px;
   margin-top: 10px;
+  margin-right: 10px;
   transition: 0.3s all ease-in-out;
   cursor: pointer;
   border-radius: 5px;
