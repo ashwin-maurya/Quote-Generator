@@ -33,30 +33,25 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const generateQuote = async () => {
     try {
-      setIsLoading(true); // Set loading state to true when starting the generation
+      setIsLoading(true);
 
       const response = await fetch("/api/generateQuote", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        // Set the response type to 'blob'
-        responseType: "blob",
       });
 
-      const blobData = await response.blob();
+      const blobData = new Blob([await response.arrayBuffer()], {
+        type: response.headers.get("Content-Type"),
+      });
+
       const imageURL = URL.createObjectURL(blobData);
-      console.log(imageURL);
-      console.log(blobData);
 
-      // Display the generated image on the screen
       setGeneratedImageURL(imageURL);
-
-      // Increment the count of generated quotes
       setNumberOfQuotes((prevCount) => (prevCount as number) + 1);
-
-      // Open the modal
       setIsModalOpen(true);
+
       const downloadLink = document.createElement("a");
       downloadLink.href = imageURL;
       downloadLink.download = "generated_quote_image.jpg";
@@ -64,7 +59,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error generating quote:", error);
     } finally {
-      setIsLoading(false); // Set loading state to false when generation is complete
+      setIsLoading(false);
     }
   };
 
