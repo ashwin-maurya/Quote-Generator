@@ -109,7 +109,7 @@ export default async function handler(req, res) {
       "Content-Disposition",
       "attachment; filename=generated_quote_image.jpg"
     );
-    res.send(imageBuffer);
+    res.end(imageBuffer);
   } catch (error) {
     console.error("Error generating quote:", error);
 
