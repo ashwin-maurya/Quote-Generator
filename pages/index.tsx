@@ -42,8 +42,10 @@ export default function Home() {
         },
       });
 
+      const contentType = response.headers.get("Content-Type") || "image/jpeg"; // Provide a default value if null
+
       const blobData = new Blob([await response.arrayBuffer()], {
-        type: response.headers.get("Content-Type"),
+        type: contentType,
       });
 
       const imageURL = URL.createObjectURL(blobData);
