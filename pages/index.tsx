@@ -55,6 +55,10 @@ export default function Home() {
 
       // Open the modal
       setIsModalOpen(true);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = imageURL;
+      downloadLink.download = "generated_quote_image.jpg";
+      downloadLink.click();
     } catch (error) {
       console.error("Error generating quote:", error);
     } finally {
