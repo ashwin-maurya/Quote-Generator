@@ -40,6 +40,8 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
+        // Set the response type to 'blob'
+        responseType: "blob",
       });
 
       const blobData = await response.blob();
