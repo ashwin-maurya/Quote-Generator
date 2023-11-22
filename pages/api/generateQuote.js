@@ -9,6 +9,7 @@ export default async function handler(req, res) {
   try {
     // Fetch a random quote
     const quoteData = await getRandomQuote(apiURL);
+    console.log(quoteData);
 
     // Image Construction
     const width = 1280;
@@ -88,7 +89,6 @@ export default async function handler(req, res) {
 
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
     const selectedBackgroundImage = backgroundImages[randomIndex];
-
     // Composite this Image together
     const svgBuffer = Buffer.from(svgImage);
 

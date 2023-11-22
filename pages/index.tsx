@@ -44,6 +44,8 @@ export default function Home() {
 
       const blobData = await response.blob();
       const imageURL = URL.createObjectURL(blobData);
+      console.log(imageURL);
+      console.log(blobData);
 
       // Display the generated image on the screen
       setGeneratedImageURL(imageURL);
